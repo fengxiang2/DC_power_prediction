@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import KFold, TimeSeriesSplit
 import lightgbm as lgb
-import pickle
+
 from sklearn.preprocessing import PolynomialFeatures
 import glob
 import datetime
