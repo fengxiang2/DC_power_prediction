@@ -251,20 +251,18 @@ X_test = test[fea]
 
 #lgb五折交叉验证
 kf = KFold(n_splits=5, random_state=2019, shuffle=True)
+
 lgb_param = {    'boosting_type': 'gbdt', 
     'objective': 'regression', 
-    #'num_class':3,
     'learning_rate': 0.1, 
-#     'num_leaves': 42,
          
     'max_depth':-1,   
-     'subsample': 0.5, 
-    'colsample_bytree': 0.5,
-    #'is_unbalance': 'true',
+     'subsample': 0.7, 
+    'colsample_bytree': 0.7,
     'metric':'mae'
     }
 
-#score = []
+
 imp = pd.DataFrame()
 oof_lgb = np.zeros(len(X))
 pred_lgb = np.zeros(len(X_test))
