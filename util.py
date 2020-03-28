@@ -30,6 +30,26 @@ train = pd.concat(train_files.map(read).values, axis = 0)
 #删除
 train.drop(['实际辐照度'],axis=1,inplace=True)
 
+
+# 数据修正
+def data_corection(data,test):
+    l=len(data)
+    for feature_num, feature in enumerate(data.keys()):
+        if feature in ['时间','实际功率','实际辐照度', 'id'] :
+            1+1
+        else:
+            print('正在处理的特征：',feature)
+            Q1 = np.percentile(test[feature], 25) # test中25%分位的数值
+            Q3 = np.percentile(test[feature], 75) # test中75%分位的数值
+            step = (Q3-Q1)
+            # 删除掉data中不在【(Q1 - step)和(Q3 + step)】范围内的异常值
+            feature_index=data[~((data[feature] >= (Q1 - step)) & (data[feature] <= (Q3 + step)))].index
+            data=data.drop(index=feature_index, axis= 0)
+    return data
+
+
+train =  data_corection(train,test)
+
 #修改列名
 train.columns = ['time','fzd','fs','fx','wd','sd','yq','label','index']
 test.columns = ['id','time','fzd','fs','fx','wd','sd','yq','index']
